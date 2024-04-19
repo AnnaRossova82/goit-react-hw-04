@@ -1,10 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useToasts } from 'react-hot-toast';
 
 const SearchBar = ({ onSearch }) => {
-  const { addToast } = useToasts();
-
   const initialValues = {
     searchTerm: '',
   };
@@ -15,14 +12,7 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (values, { resetForm }) => {
     onSearch(values.searchTerm);
-    addToast('Searching...', {
-      icon: '🔍',
-      style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-      },
-    });
+    alert('Searching...'); // Замість useToasts
     resetForm();
   };
 
@@ -31,7 +21,7 @@ const SearchBar = ({ onSearch }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSearch={handleSubmit}
+        onSubmit={handleSubmit} // Зміна onSearch на onSubmit
       >
         <Form>
           <Field
