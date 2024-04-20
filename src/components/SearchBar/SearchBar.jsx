@@ -12,7 +12,7 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (values, { resetForm }) => {
     onSearch(values.searchTerm);
-    alert('Searching...'); // Замість useToasts
+    alert('Searching...'); // Замість useToasts temporary
     resetForm();
   };
 

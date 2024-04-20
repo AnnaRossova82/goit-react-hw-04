@@ -47,7 +47,7 @@ export default function App() {
 
   return (
     <div className={css.container}>
-              <button onClick={handleLoadMore}>Load more images</button>
+         
 
       <SearchBar onSearch={handleSearch} />
 

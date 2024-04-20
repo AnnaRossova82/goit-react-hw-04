@@ -9,13 +9,17 @@ export const fetchImages = async (searchQuery, currentPage) => {
             params: {
               query: searchQuery,
               per_page: 12,
+              orientation: "landscape",
               page: currentPage,
             },
           });
+          console.log(response.data.results); 
+
           return response.data.results;
+
     } catch (error) {
         console.error('Error fetching images:', error);
-        return []; 
+      return []; 
     }
 }
 
