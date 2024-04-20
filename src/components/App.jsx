@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import css from './App.module.css';
 import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { fetchImages } from '../images-api.js';
+import Loader from 'react-loader-spinner';
 
 export default function App() {
   const [images, setImages] = useState([]);
@@ -11,6 +12,7 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
+  const btnRef = useRef();
 
   const handleSearch = (newQuery) => {
     setQuery(newQuery);
@@ -42,6 +44,14 @@ export default function App() {
     fetchImageData();
   }, [page, query]);
 
+  useEffect(() => {
+    if (page > 1 && btnRef.current) {
+      setTimeout(() => {
+        btnRef.current.scrollIntoView({ behavior: 'smooth' });
+      }, 100); 
+    }
+  }, [page]);
+
   const openModal = (image) => {
     setSelectedImage(image);
   };
@@ -56,19 +66,21 @@ export default function App() {
       
       {error && <b>There was an error! Please reload the page!</b>}
       
-      {images.length > 0 && (
-        <ImageGallery 
-          items={images} 
-          openModal={openModal} 
-          closeModal={closeModal} 
-          selectedImage={selectedImage} 
-        />
+      <ImageGallery 
+        items={images} 
+        openModal={openModal} 
+        closeModal={closeModal} 
+        selectedImage={selectedImage} 
+      />
+      
+      {isLoading && (
+        <div className={css.loader}>
+           <Loader type="ThreeDots" color="#000" height={50} width={50} /> */
+        </div>
       )}
       
-      {isLoading && <b>Please wait, loading images...</b>}
-      
       {images.length > 0 && !isLoading && (
-        <button onClick={handleLoadMore}>Load more images</button>
+        <button ref={btnRef} onClick={handleLoadMore}>Load more images</button>
       )}
     </div>
   );
