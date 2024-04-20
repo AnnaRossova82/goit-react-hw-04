@@ -1,0 +1,22 @@
+.itemsList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    height: auto;
+}
+
+.imagesList{
+    width: 25%; 
+    flex-basis: 25%; 
+    box-sizing: border-box; 
+    padding: 5px; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+
+}
+
+.image{
+    width: 100%; 
+    height: auto; 
+    
+}

@@ -1,27 +1,29 @@
+import { toast, Toaster } from 'react-hot-toast';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 
-const SearchBar = ({ onSearch }) => {
+
+const SearchBar = ({ onSubmit }) => {
   const initialValues = {
     searchTerm: '',
   };
 
-  const validationSchema = Yup.object({
-    searchTerm: Yup.string().required('Please enter a search term'),
-  });
 
   const handleSubmit = (values, { resetForm }) => {
-    onSearch(values.searchTerm);
-    alert('Searching...'); // Замість useToasts temporary
-    resetForm();
+    if (!values.searchTerm) {
+      toast.error('Please enter a search term');
+    } else {
+      onSubmit(values.searchTerm);
+      alert('Searching...'); // Temporary useToasts
+      resetForm();
+    }
   };
 
   return (
     <header>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit} // Зміна onSearch на onSubmit
+
+        onSubmit={handleSubmit}
       >
         <Form>
           <Field
@@ -35,6 +37,7 @@ const SearchBar = ({ onSearch }) => {
           <button type="submit">Search</button>
         </Form>
       </Formik>
+      <Toaster position="top-center" reverseOrder={false} /> {/* Доданий компонент Toaster */}
     </header>
   );
 };
