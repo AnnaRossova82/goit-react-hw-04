@@ -14,7 +14,7 @@ const SearchBar = ({ onSubmit }) => {
       toast.error('Please enter a search term');
     } else {
       onSubmit(values.searchTerm);
-      alert('Searching...'); // Temporary instead of useToasts
+      toast.success('Searching...'); 
       resetForm();
     }
   };
@@ -40,7 +40,7 @@ const SearchBar = ({ onSubmit }) => {
       
         </Form>
       </Formik>
-      <Toaster position="top-center" reverseOrder={false} /> {/* Доданий компонент Toaster */}
+      <Toaster position="top-center" reverseOrder={false} /> 
     </header>
   );
 };

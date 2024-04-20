@@ -3,7 +3,7 @@ import css from './App.module.css';
 import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { fetchImages } from '../images-api.js';
-import Loader from 'react-loader-spinner';
+import { Audio } from 'react-loader-spinner'
 
 export default function App() {
   const [images, setImages] = useState([]);
@@ -74,8 +74,16 @@ export default function App() {
       />
       
       {isLoading && (
-        <div className={css.loader}>
-           <Loader type="ThreeDots" color="#000" height={50} width={50} /> */
+        <div>
+          <Audio
+            height="80"
+            width="80"
+            radius="9"
+            color="green"
+            ariaLabel="three-dots-loading"
+            wrapperStyle
+            wrapperClass
+          />
         </div>
       )}
       

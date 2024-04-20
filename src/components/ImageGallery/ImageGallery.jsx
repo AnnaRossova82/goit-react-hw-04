@@ -32,7 +32,7 @@ const ImageGallery = ({ items, openModal, closeModal, selectedImage }) => {
       )}
 
       {selectedImage && (
-        <Modal
+        <Modal className={css.modal}
           isOpen={true}
           onRequestClose={closeModal}
           style={customStyles}
