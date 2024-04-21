@@ -3,7 +3,10 @@ import css from './App.module.css';
 import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { fetchImages } from '../images-api.js';
-import { Audio } from 'react-loader-spinner'
+import { Audio } from 'react-loader-spinner';
+import ImageModal from './ImageModal/ImageModal.jsx';
+import LoadMoreBtn from './LoadModeBtn/LoadMoreBtn.jsx'
+
 
 export default function App() {
   const [images, setImages] = useState([]);
@@ -66,12 +69,7 @@ export default function App() {
       
       {error && <b>There was an error! Please reload the page!</b>}
       
-      <ImageGallery 
-        items={images} 
-        openModal={openModal} 
-        closeModal={closeModal} 
-        selectedImage={selectedImage} 
-      />
+      <ImageGallery items={images} openModal={openModal} />
       
       {isLoading && (
         <div>
@@ -88,8 +86,10 @@ export default function App() {
       )}
       
       {images.length > 0 && !isLoading && (
-        <button ref={btnRef} onClick={handleLoadMore}>Load more images</button>
+        <LoadMoreBtn onClick={handleLoadMore} />
       )}
+
+      <ImageModal selectedImage={selectedImage} closeModal={closeModal} />
     </div>
   );
 }
