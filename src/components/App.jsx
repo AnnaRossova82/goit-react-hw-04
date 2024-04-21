@@ -5,7 +5,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import { fetchImages } from '../images-api.js';
 import { Audio } from 'react-loader-spinner';
 import ImageModal from './ImageModal/ImageModal.jsx';
-import LoadMoreBtn from './LoadModeBtn/LoadMoreBtn.jsx'
+import LoadMoreBtn from './LoadModeBtn/LoadMoreBtn.jsx';
 
 
 export default function App() {
@@ -25,6 +25,11 @@ export default function App() {
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
+    
+
+    if (btnRef.current) {
+      btnRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
@@ -37,6 +42,11 @@ export default function App() {
       try {
         const data = await fetchImages(query, page);
         setImages((prevImages) => [...prevImages, ...data]);
+
+
+        if (page > 1 && btnRef.current) {
+          btnRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       } catch (error) {
         setError(true);
       } finally {
@@ -46,14 +56,6 @@ export default function App() {
 
     fetchImageData();
   }, [page, query]);
-
-  useEffect(() => {
-    if (page > 1 && btnRef.current) {
-      setTimeout(() => {
-        btnRef.current.scrollIntoView({ behavior: 'smooth' });
-      }, 100); 
-    }
-  }, [page]);
 
   const openModal = (image) => {
     setSelectedImage(image);
@@ -66,11 +68,11 @@ export default function App() {
   return (
     <div className={css.container}>
       <SearchBar onSubmit={handleSearch} />
-      
+
       {error && <b>There was an error! Please reload the page!</b>}
-      
+
       <ImageGallery items={images} openModal={openModal} />
-      
+
       {isLoading && (
         <div>
           <Audio
@@ -84,9 +86,9 @@ export default function App() {
           />
         </div>
       )}
-      
+
       {images.length > 0 && !isLoading && (
-        <LoadMoreBtn onClick={handleLoadMore} />
+        <LoadMoreBtn ref={btnRef} onClick={handleLoadMore} />
       )}
 
       <ImageModal selectedImage={selectedImage} closeModal={closeModal} />
